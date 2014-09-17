@@ -12,6 +12,13 @@ function Login() {
  * Say Hello {name} to the user
  */
 Login.prototype.hello = function(sessionId) {
+	
+		/*
+		for (var sid in this.sessionMap)
+		{
+			console.log('List '+sid);
+		}*/
+	
 	return 'Hello ' + this.sessionMap[sessionId].name + '\n';
 };
 
@@ -30,9 +37,8 @@ Login.prototype.login = function(_name, _email) {
 	* Generate unique session id and set it into sessionMap like foo@bar.com
 	*/
 	var sessionId = new Date().getTime();
-	this.sessionMap[sessionId] = { name: _name, email: _email } 
-	
-	console.log('new session id ' + sessionId + ' for login::' + _email);
+	console.log( 'In login emIL '+ _email+' NAME '+_name+ ' Sessid '+sessionId);
+	this.sessionMap[sessionId] = { name: _name, email: _email } ;
 	
 	return sessionId;
 };
@@ -45,7 +51,28 @@ Login.prototype.logout = function(sessionId) {
    /*
 	* TODO: Remove the given sessionId from the sessionMap
 	*/
+	
+            delete this.sessionMap[sessionId];
+   
 };
 
+Login.prototype.regenerate = function(sessionId) {
+	//console.log('logout::' + sessionId);
+   /*
+	* TODO: Remove the given sessionId from the sessionMap
+	*/
+			var _name=this.sessionMap[sessionId].name;
+			var _email=this.sessionMap[sessionId].email;
+            delete this.sessionMap[sessionId];
+            console.log('in regenerate emIL '+_email+'NAME '+_name);
+            var newSessionId = this.login(_name,_email);
+            return newSessionId;
+        }
+    
 // Export the Login class
 module.exports = new Login();
+      
+
+
+        
+    
